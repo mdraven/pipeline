@@ -32,11 +32,19 @@ namespace pipeline {
            в pipeline участвуют только PipeOp, а фабрики не участвуют.
         */
         template <class Func>
-        struct PipeOpFactory final {
+        class PipeOpFactory final {
             Func m_func;
-
+        public:
             explicit PipeOpFactory(Func func)
                 : m_func(std::move(func)) {}
+
+            const Func& get() const {
+                return m_func;
+            }
+
+            Func& get() {
+                return m_func;
+            }
 
             template <class... TArgs>
             auto operator()(TArgs&&... args) const {
