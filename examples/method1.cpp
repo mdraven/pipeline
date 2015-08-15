@@ -21,6 +21,8 @@ void print(const Data& d) {
     std::cout << d.m_data << std::endl;
 }
 
+#define M(METHOD_NAME) [](auto&& klass, auto&&... args) { return klass.METHOD_NAME(args...); }
+
 int main() {
     using namespace pipeline;
 
@@ -32,6 +34,8 @@ int main() {
     Data() | inc_(1) | inc_(1) | print_;
 
     Data() | &Data::inc A(1) | &Data::inc A(1) | print A();
+
+    Data() | M(inc)A(1) | M(inc)A(1) | print A();
 
     return 0;
 }
