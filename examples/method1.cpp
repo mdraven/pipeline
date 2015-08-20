@@ -21,7 +21,9 @@ void print(const Data& d) {
     std::cout << d.m_data << std::endl;
 }
 
-#define M(METHOD_NAME) [](auto&& klass, auto&&... args) { return klass.METHOD_NAME(args...); }
+#define M(METHOD_NAME) [](auto&& klass, auto&&... args) {                \
+        return klass.METHOD_NAME(std::forward<decltype(args)>(args)...); \
+    }
 
 int main() {
     using namespace pipeline;
